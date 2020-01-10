@@ -39,7 +39,7 @@ export const getProfiles = () => async dispatch => {
 
     dispatch({
       type: GET_PROFILES,
-      payload: res.data
+      payload: res.data.profiles
     });
   } catch (err) {
     dispatch({
