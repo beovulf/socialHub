@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://pcichon88:pcichon88@socialhub-u3jet.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "382e177e4baa35496390",
+  "githubSecret": "ea141c353b693abfcb0c2c3d7f674025ffbfe0be"
+}
