@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addPost } from "../../actions/post";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
+import Input from "../form/Input";
 
 const PostForm = ({ addPost }) => (
   <div class="post-form">
@@ -25,8 +26,7 @@ const PostForm = ({ addPost }) => (
     >
       {({ isSubmitting }) => (
         <Form className="form my-1">
-          <Field name="text" component="textarea" placeholder="Create a post" />
-          <ErrorMessage name="text" component="div" />
+          <Input name="text" type="textarea" placeholder="Create a post" />
           <input
             type="submit"
             disabled={isSubmitting}
