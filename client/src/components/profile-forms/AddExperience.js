@@ -3,6 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addExperience } from "../../actions/profile";
+import { Formik, Form } from "formik";
+import Input from "../form/Input";
 
 const AddExperience = ({ addExperience, history }) => {
   const [formData, setFormData] = useState({
@@ -17,11 +19,6 @@ const AddExperience = ({ addExperience, history }) => {
 
   const [toDateDisabled, toggleDisabled] = useState(false);
 
-  const { company, title, location, from, to, current, description } = formData;
-
-  const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
   return (
     <Fragment>
       <h1 class="large text-primary">Add An Experience</h1>
@@ -30,91 +27,46 @@ const AddExperience = ({ addExperience, history }) => {
         positions that you have had in the past
       </p>
       <small>* = required field</small>
-      <form
-        class="form"
-        onSubmit={e => {
-          e.preventDefault();
-          addExperience(formData, history);
+      <Formik
+        initialValues={{ ...formData }}
+        enableReinitialize
+        onSubmit={values => {
+          addExperience(values, history);
         }}
       >
-        <div class="form-group">
-          <input
-            type="text"
-            placeholder="* Job Title"
-            name="title"
-            required
-            value={title}
-            onChange={e => onChange(e)}
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            placeholder="* Company"
-            name="company"
-            required
-            value={company}
-            onChange={e => onChange(e)}
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            placeholder="Location"
-            name="location"
-            value={location}
-            onChange={e => onChange(e)}
-          />
-        </div>
-        <div class="form-group">
-          <h4>From Date</h4>
-          <input
-            type="date"
-            name="from"
-            value={from}
-            onChange={e => onChange(e)}
-          />
-        </div>
-        <div class="form-group">
-          <p>
-            <input
+        {values => (
+          <Form className="form">
+            <Input name="title" placeholder="* Job Title" />
+            <Input name="company" placeholder="* Company" />
+            <Input name="location" placeholder="Location" />
+            <Input type="date" name="from" />
+            <Input
               type="checkbox"
               name="current"
-              value={current}
-              checked={current}
+              checked={values.current}
+              value={values.current}
+              label="Current job"
               onChange={e => {
-                setFormData({ ...formData, current: !current });
                 toggleDisabled(!toDateDisabled);
               }}
-            />{" "}
-            Current Job
-          </p>
-        </div>
-        <div class="form-group">
-          <h4>To Date</h4>
-          <input
-            type="date"
-            name="to"
-            value={to}
-            onChange={e => onChange(e)}
-            disabled={toDateDisabled ? "disabled" : ""}
-          />
-        </div>
-        <div class="form-group">
-          <textarea
-            name="description"
-            cols="30"
-            rows="5"
-            placeholder="Job Description"
-            value={description}
-            onChange={e => onChange(e)}
-          ></textarea>
-        </div>
-        <input type="submit" class="btn btn-primary my-1" />
-        <Link className="btn btn-light my-1" to="/dashboard">
-          Go Back
-        </Link>
-      </form>
+            />
+            <Input
+              type="date"
+              name="to"
+              disabled={toDateDisabled ? "disabled" : ""}
+            />
+            <Input
+              type="textarea"
+              name="description"
+              placeholder="Job Description"
+            />
+            <input type="submit" class="btn btn-primary my-1" />
+            <Link className="btn btn-light my-1" to="/dashboard">
+              Go Back
+            </Link>
+          </Form>
+        )}
+      </Formik>
     </Fragment>
   );
 };
