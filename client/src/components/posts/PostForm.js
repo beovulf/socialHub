@@ -1,38 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addPost } from "../../actions/post";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
-const PostForm = ({ addPost }) => {
-  const [text, setText] = useState("");
-
-  return (
-    <div class="post-form">
-      <div class="bg-primary p">
-        <h3>Say Something...</h3>
-      </div>
-      <form
-        class="form my-1"
-        onSubmit={e => {
-          e.preventDefault();
-          addPost({ text });
-          setText("");
-        }}
-      >
-        <textarea
-          name="text"
-          cols="30"
-          rows="5"
-          placeholder="Create a post"
-          value={text}
-          onChange={e => setText(e.target.value)}
-          required
-        ></textarea>
-        <input type="submit" class="btn btn-dark my-1" value="Submit" />
-      </form>
+const PostForm = ({ addPost }) => (
+  <div class="post-form">
+    <div class="bg-primary p">
+      <h3>Say Something...</h3>
     </div>
-  );
-};
+    <Formik
+      initialValues={{ text: "" }}
+      validate={values => {
+        const errors = {};
+        if (!values.text) {
+          errors.text = "Required";
+        }
+        return errors;
+      }}
+      onSubmit={(values, { resetForm }) => {
+        addPost({ text: values.text });
+        resetForm();
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form className="form my-1">
+          <Field name="text" component="textarea" placeholder="Create a post" />
+          <ErrorMessage name="text" component="div" />
+          <input
+            type="submit"
+            disabled={isSubmitting}
+            class="btn btn-dark my-1"
+            value="Submit"
+          />
+        </Form>
+      )}
+    </Formik>
+  </div>
+);
 
 PostForm.propTypes = {
   addPost: PropTypes.func.isRequired
