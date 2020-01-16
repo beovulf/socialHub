@@ -54,6 +54,39 @@ const deleteComment = (postId, commentId) => {
   return axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 };
 
+// Profile
+
+const getCurrentProfile = () => {
+  return axios.get("/api/profile/me");
+};
+const getProfiles = () => {
+  return axios.get("/api/profile");
+};
+const getProfileById = userId => {
+  return axios.get(`/api/profile/user/${userId}`);
+};
+const getGithubRepos = username => {
+  return axios.get(`/api/profile/github/${username}`);
+};
+const createProfile = formData => {
+  return axios.post("/api/profile", formData, config);
+};
+const addExperience = formData => {
+  return axios.put("/api/profile/experience", formData, config);
+};
+const addEducation = formData => {
+  return axios.put("/api/profile/education", formData, config);
+};
+const deleteExperience = id => {
+  return axios.delete(`/api/profile/experience/${id}`);
+};
+const deleteEducation = id => {
+  return axios.delete(`/api/profile/education/${id}`);
+};
+const deleteAccount = () => {
+  return axios.delete("/api/profile");
+};
+
 export default {
   loadUser,
   registerUser,
@@ -65,5 +98,15 @@ export default {
   addPost,
   getPost,
   addComment,
-  deleteComment
+  deleteComment,
+  getCurrentProfile,
+  getProfiles,
+  getProfileById,
+  getGithubRepos,
+  createProfile,
+  addExperience,
+  addEducation,
+  deleteExperience,
+  deleteEducation,
+  deleteAccount
 };

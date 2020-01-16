@@ -1,4 +1,3 @@
-import axios from "axios";
 import { setAlert } from "./alert";
 
 import {
@@ -11,6 +10,7 @@ import {
   ADD_COMMENT,
   REMOVE_COMMENT
 } from "./types";
+
 import ApiService from "../services/ApiService";
 
 // Get posts

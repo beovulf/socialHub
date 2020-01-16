@@ -117,7 +117,7 @@ const CreateProfile = ({ createProfile, history }) => {
                 <InputWithIcon
                   name="facebook"
                   placeholder="Facebook URL"
-                  icon="twitter"
+                  icon="facebook"
                 />
                 <InputWithIcon
                   name="twitter"
